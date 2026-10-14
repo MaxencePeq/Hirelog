@@ -11,3 +11,27 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Status {
+  A_POSTULER
+  POSTULER
+  ENTRETIEN
+  OFFRE
+  REFUS
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  candidatures Candidature[]
+}
+
+model Candidature {
+  id      String @id @default(uuid())
+  company String
+  userId  String
+  status  Status @default(A_POSTULER)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
