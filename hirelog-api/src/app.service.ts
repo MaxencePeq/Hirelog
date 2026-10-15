@@ -6,3 +6,10 @@ export class AppService {
     return 'Hello World!';
   }
 }
+
+@Injectable()
+export class TestService {
+  getTest(): string {
+    return 'Ceci est un test vielle pute';
+  }
+}
