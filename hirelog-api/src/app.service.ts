@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from './prisma/prisma.service.js';
 
 @Injectable()
 export class AppService {
@@ -9,7 +10,10 @@ export class AppService {
 
 @Injectable()
 export class TestService {
-  getTest(): string {
-    return 'Ceci est un test vielle pute';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async getTest(): Promise<string> {
+    const NbUser = await this.prisma.user.count();
+    return 'En bdd, il y a : ' + NbUser + ' utilisateurs';
   }
 }
